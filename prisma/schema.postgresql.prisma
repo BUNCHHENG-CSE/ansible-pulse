@@ -1,0 +1,131 @@
+// ==============================================================================
+// TCT AnsiblePulse - Production Neon PostgreSQL Prisma Schema
+// Optimized for PostgreSQL with Neon Serverless Pooling
+// ==============================================================================
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model ScanRun {
+  id                     String             @id @default(uuid())
+  createdAt              DateTime           @default(now()) @map("created_at")
+  totalReposScanned      Int                @default(0) @map("total_repos_scanned")
+  totalPlaybooks         Int                @default(0) @map("total_playbooks")
+  totalRoles             Int                @default(0) @map("total_roles")
+  totalTasks             Int                @default(0) @map("total_tasks")
+  duplicateClustersCount Int                @default(0) @map("duplicate_clusters_count")
+  duplicateTasksCount    Int                @default(0) @map("duplicate_tasks_count")
+  highRiskAssetsCount    Int                @default(0) @map("high_risk_assets_count")
+  zombieCoreAssetsCount  Int                @default(0) @map("zombie_core_assets_count")
+  divergedForksCount     Int                @default(0) @map("diverged_forks_count")
+  overallHealthScore     Float              @default(100.0) @map("overall_health_score")
+  status                 String             @default("completed")
+
+  // Relationships
+  assets                 Asset[]
+  duplicateClusters      DuplicateCluster[]
+  blastEdges             BlastEdge[]
+  riskFlags              RiskFlag[]
+
+  @@map("scan_runs")
+}
+
+model Asset {
+  id                   String      @id
+  scanId               String      @map("scan_id")
+  name                 String
+  repoName             String      @map("repo_name")
+  relativePath         String      @map("relative_path")
+  fullPath             String      @map("full_path")
+  assetType            String      @map("asset_type")
+  tasksCount           Int         @default(0) @map("tasks_count")
+  targetHosts          String?     @map("target_hosts")
+  blastRadiusScore     Int         @default(0) @map("blast_radius_score")
+  downstreamDependents Json        @default("[]") @map("downstream_dependents")
+  upstreamDependencies Json        @default("[]") @map("upstream_dependencies")
+  riskLevel            String      @default("low") @map("risk_level")
+  riskScore            Float       @default(0.0) @map("risk_score")
+  riskFlags            Json        @default("[]") @map("risk_flags")
+  gitMetadata          Json        @default("{}") @map("git_metadata")
+  executionMetadata    Json        @default("{}") @map("execution_metadata")
+
+  scanRun              ScanRun     @relation(fields: [scanId], references: [id], onDelete: Cascade)
+  tasks                Task[]
+
+  @@map("assets")
+}
+
+model Task {
+  id                  String   @id
+  scanId              String   @map("scan_id")
+  assetId             String   @map("asset_id")
+  name                String
+  module              String
+  parameters          Json     @default("{}")
+  lineNumber          Int      @default(1) @map("line_number")
+  whenCondition       String?  @map("when_condition")
+  tags                Json     @default("[]")
+  notify              Json     @default("[]")
+  normalizedSignature String   @map("normalized_signature")
+
+  asset               Asset    @relation(fields: [assetId], references: [id], onDelete: Cascade)
+
+  @@map("tasks")
+}
+
+model DuplicateCluster {
+  id                      String   @id
+  scanId                  String   @map("scan_id")
+  clusterId               String   @map("cluster_id")
+  functionalityName       String   @map("functionality_name")
+  primaryModule           String   @map("primary_module")
+  similarityScore         Float    @default(0.0) @map("similarity_score")
+  canonicalRecommendation String?  @map("canonical_recommendation")
+  variants                Json     @default("[]")
+  divergenceSummary       String   @default("") @map("divergence_summary")
+  riskAssessment          String   @default("") @map("risk_assessment")
+
+  scanRun                 ScanRun  @relation(fields: [scanId], references: [id], onDelete: Cascade)
+
+  @@map("duplicate_clusters")
+}
+
+model BlastEdge {
+  id           Int      @id @default(autoincrement())
+  scanId       String   @map("scan_id")
+  sourceId     String   @map("source_id")
+  targetId     String   @map("target_id")
+  relationship String
+
+  scanRun      ScanRun  @relation(fields: [scanId], references: [id], onDelete: Cascade)
+
+  @@map("blast_edges")
+}
+
+model RiskFlag {
+  id                  Int      @id @default(autoincrement())
+  scanId              String   @map("scan_id")
+  assetId             String   @map("asset_id")
+  assetName           String   @map("asset_name")
+  repoName            String   @map("repo_name")
+  assetType           String   @map("asset_type")
+  riskLevel           String   @map("risk_level")
+  riskScore           Float    @default(0.0) @map("risk_score")
+  blastRadius         Int      @default(0) @map("blast_radius")
+  stalenessDays       Int      @default(0) @map("staleness_days")
+  authorsCount        Int      @default(0) @map("authors_count")
+  lastExecutionStatus String   @default("never_run") @map("last_execution_status")
+  primaryRiskFlag     String   @map("primary_risk_flag")
+  detailedReasons     Json     @default("[]") @map("detailed_reasons")
+  suggestedAction     String   @default("") @map("suggested_action")
+
+  scanRun             ScanRun  @relation(fields: [scanId], references: [id], onDelete: Cascade)
+
+  @@map("risk_flags")
+}

@@ -1,0 +1,41 @@
+{
+  "name": "tct-ansiblepulse",
+  "version": "1.0.0",
+  "private": true,
+  "description": "TCT AnsiblePulse — Observability Layer for Fragmented Ansible & IaC Scripts (Next.js Full-Stack)",
+  "scripts": {
+    "dev": "next dev",
+    "build": "node scripts/prisma-gen.js && next build",
+    "start": "next start",
+    "lint": "eslint",
+    "analyze": "next analyze",
+    "prisma:generate": "node scripts/prisma-gen.js",
+    "prisma:generate:sqlite": "prisma generate --schema=prisma/schema.prisma",
+    "prisma:generate:neon": "prisma generate --schema=prisma/schema.postgresql.prisma",
+    "prisma:push:sqlite": "prisma db push --schema=prisma/schema.prisma",
+    "prisma:push:neon": "prisma db push --schema=prisma/schema.postgresql.prisma"
+  },
+  "dependencies": {
+    "@neondatabase/serverless": "^1.2.0",
+    "@prisma/client": "6.19.3",
+    "clsx": "^2.1.1",
+    "lucide-react": "^1.61.0",
+    "next": "16.4.3",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "tailwind-merge": "^3.7.0",
+    "yaml": "^2.9.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/turbopack": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.4.3",
+    "prisma": "6.19.3",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  },
+  "packageManager": "bun@1.4.0"
+}
