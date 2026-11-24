@@ -44,14 +44,10 @@ const DatabaseModal = dynamic(() => import('./DatabaseModal').then(m => m.Databa
 const ReportModal = dynamic(() => import('./ReportModal').then(m => m.ReportModal));
 const QualityGateModal = dynamic(() => import('./QualityGateModal').then(m => m.QualityGateModal));
 
-import {
-  Layers, Copy, ShieldAlert, GitFork, Terminal,
-  RefreshCw, DollarSign, Activity, Sparkles, Database,
-  Sun, Moon, ShieldCheck, FileText, Shield, ChevronDown
-} from 'lucide-react';
+import { Layers, Copy, ShieldAlert, GitFork, Terminal, RefreshCw, DollarSign, Activity, Sparkles, Sun, Moon, ShieldCheck, FileText, Shield, ChevronDown } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from './ui/button';
-import { Badge } from './ui/badge';
+
 import { TabsList, TabsTrigger } from './ui/tabs';
 
 export function App() {

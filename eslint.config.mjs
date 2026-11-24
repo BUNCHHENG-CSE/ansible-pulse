@@ -1,13 +1,13 @@
-import nextPlugin from "@next/eslint-plugin-next";
+import nextVitals from "eslint-config-next/core-web-vitals";
+import nextTs from "eslint-config-next/typescript";
 
 const eslintConfig = [
+  ...nextVitals,
+  ...nextTs,
   {
-    plugins: {
-      "@next/next": nextPlugin,
-    },
     rules: {
-      ...nextPlugin.configs.recommended.rules,
-      ...nextPlugin.configs["core-web-vitals"].rules,
+      // Legacy code uses `any` heavily for parsed YAML/JSON; surface as warnings, not failures.
+      "@typescript-eslint/no-explicit-any": "warn",
     },
   },
   {
@@ -15,9 +15,11 @@ const eslintConfig = [
       ".next/**",
       "node_modules/**",
       "frontend/**",
+      "backend/**",
       "demo_repos/**",
       "scripts/**",
       "prisma/**",
+      "next-env.d.ts",
       "*.config.js",
       "*.config.ts",
       "*.config.mjs",

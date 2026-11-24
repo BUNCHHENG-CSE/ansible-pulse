@@ -1,9 +1,9 @@
 'use client';
 
 import React, { useState } from 'react';
-import { DollarSign, TrendingUp, Users, AlertCircle, ShieldCheck, Check, Sparkles, ArrowRight } from 'lucide-react';
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from './ui/card';
-import { Badge } from './ui/badge';
+import { DollarSign } from 'lucide-react';
+import { Card } from './ui/card';
+
 import { Button } from './ui/button';
 
 interface RoiCalculatorModalProps {
@@ -168,7 +168,7 @@ export const RoiCalculatorModal: React.FC<RoiCalculatorModalProps> = ({
           <div className="pt-2 border-t border-neutral-200 dark:border-neutral-800 text-[11px] text-neutral-600 dark:text-neutral-400 leading-relaxed">
             <span className="font-semibold text-neutral-800 dark:text-neutral-300">Validation Statement:</span>
             <p className="mt-0.5 italic text-neutral-500 dark:text-neutral-400">
-              "When did running the wrong version of a playbook last cause an outage or staging drift? TCT AnsiblePulse automates blast radius visibility for less than one engineering team lunch."
+              &ldquo;When did running the wrong version of a playbook last cause an outage or staging drift? TCT AnsiblePulse automates blast radius visibility for less than one engineering team lunch.&rdquo;
             </p>
           </div>
         </div>

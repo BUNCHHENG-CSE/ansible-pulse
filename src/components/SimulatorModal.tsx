@@ -3,12 +3,8 @@
 import React, { useState, useEffect } from 'react';
 import type { ImpactSimulation } from '@/lib/types';
 import { simulateImpact } from '@/lib/api';
-import {
-  ShieldAlert, AlertTriangle, Layers, Server, CheckCircle2,
-  XCircle, ArrowRight, Play, ExternalLink, Zap, Compass,
-  FolderGit2, Activity
-} from 'lucide-react';
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from './ui/card';
+import { Zap, Activity } from 'lucide-react';
+import { Card } from './ui/card';
 import { Badge } from './ui/badge';
 import { Button } from './ui/button';
 

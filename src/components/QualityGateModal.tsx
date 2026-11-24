@@ -5,12 +5,7 @@ import type { QualityGateResult } from '@/lib/types';
 import { evaluateQualityGate } from '@/lib/api';
 import { Button } from './ui/button';
 import { Badge } from './ui/badge';
-import {
-  X, CheckCircle2, XCircle, Shield, Sliders,
-  Terminal, Copy, Check, Sparkles, Activity,
-  ShieldCheck, Layers, AlertTriangle, RotateCcw,
-  GitBranch, Code2, ChevronDown, ChevronUp
-} from 'lucide-react';
+import { X, CheckCircle2, XCircle, Shield, Sliders, Terminal, Copy, Check, Sparkles, Activity, ShieldCheck, Layers, AlertTriangle, RotateCcw, Code2, ChevronDown, ChevronUp } from 'lucide-react';
 
 interface QualityGateModalProps {
   isOpen: boolean;

@@ -3,11 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import type { DbStatus, ScanHistoryItem } from '@/lib/types';
 import { fetchDbStatus, fetchScanHistory } from '@/lib/api';
-import {
-  Database, Server, Activity, CheckCircle2, XCircle,
-  RefreshCw, Terminal, Layers, TrendingUp, Clock, Copy,
-  Check
-} from 'lucide-react';
+import { Database, RefreshCw, Terminal, Copy } from 'lucide-react';
 import { Card } from './ui/card';
 import { Badge } from './ui/badge';
 import { Button } from './ui/button';

@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import type { BlastRadiusGraph, BlastRadiusNode } from '@/lib/types';
+import type { BlastRadiusGraph } from '@/lib/types';
 import {
   Search, Play,
   ArrowDown
